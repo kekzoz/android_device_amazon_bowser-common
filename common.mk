@@ -9,7 +9,6 @@ DEVICE_PACKAGE_OVERLAYS += $(BOWSER_COMMON_FOLDER)/overlay/aosp
 PRODUCT_PACKAGES += \
     lights.bowser \
     power.bowser \
-    camera.omap4 \
     audio.primary.bowser \
     audio.hdmi.bowser \
     audio.a2dp.default
@@ -29,6 +28,12 @@ ADDITIONAL_BUILD_PROPERTIES += \
 PRODUCT_PACKAGES += \
     uim-sysfs \
     libbt-vendor
+
+ifneq (ev_soho, $(TARGET_PRODUCT))
+# Camera
+PRODUCT_PACKAGES += \
+    camera.omap4
+endif
 
 # Sensors
 PRODUCT_PACKAGES += \
