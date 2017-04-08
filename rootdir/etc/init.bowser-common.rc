@@ -95,9 +95,6 @@ on boot
     write /sys/bus/usb/devices/1-1/power/wakeup enabled
     write /sys/bus/usb/devices/1-1.2/power/wakeup enabled
 
-    # wi-fi
-    insmod /system/lib/modules/bcmdhd.ko iface_name=wlan0 firmware_path=/system/vendor/firmware/fw_bcmdhd.bin
-
     # GPS
     mkdir /data/gps 0771 system system
     chown /data/gps system system
