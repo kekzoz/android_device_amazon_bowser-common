@@ -2,7 +2,6 @@
 on fs
     mkdir /efs 0775 radio radio
     mount_all /fstab.bowser
-    swapon_all /fstab.bowser
     setprop ro.crypto.fuse_sdcard true
 
     # We chown/chmod /efs because mount is run as root + defaults
