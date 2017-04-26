@@ -1,17 +1,26 @@
-COMMON_FOLDER := device/amazon/omap4-common
 BOWSER_COMMON_FOLDER := device/amazon/bowser-common
 
-$(call inherit-product, $(COMMON_FOLDER)/common.mk)
+$(call inherit-product, device/amazon/omap4-common/common.mk)
 
 DEVICE_PACKAGE_OVERLAYS += $(BOWSER_COMMON_FOLDER)/overlay/aosp
 
-# Hardware HALs
+# Audio
+PRODUCT_COPY_FILES += \
+    $(BOWSER_COMMON_FOLDER)/prebuilt/vendor/etc/audio_effects.conf:/system/vendor/etc/audio_effects.conf \
+    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/audio_policy.conf:/system/etc/audio_policy.conf \
+    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/mixer_paths.xml:/system/etc/mixer_paths.xml
+
+# Bluetooth
 PRODUCT_PACKAGES += \
-    lights.bowser \
-    power.bowser \
-    audio.primary.bowser \
-    audio.hdmi.bowser \
-    audio.a2dp.default
+    uim-sysfs \
+    libbt-vendor
+
+PRODUCT_COPY_FILES += \
+    $(BOWSER_COMMON_FOLDER)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+
+# Camera
+# PRODUCT_PACKAGES += \
+#     camera.omap4
 
 # Device settings
 ADDITIONAL_BUILD_PROPERTIES += \
@@ -24,44 +33,29 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.camera.sound.forced=0 \
     ro.camera.video_size=1280x720
 
-# BT
-PRODUCT_PACKAGES += \
-    uim-sysfs \
-    libbt-vendor
-
-ifneq (ev_soho, $(TARGET_PRODUCT))
-# Camera
-PRODUCT_PACKAGES += \
-    camera.omap4
-endif
-
-# Sensors
-PRODUCT_PACKAGES += \
-    sensors.omap4 \
-    libinvensense_hal \
-    libmllite \
-    libmplmpu \
-
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml
 
-# Prebuilts
+# Keylayouts
 PRODUCT_COPY_FILES += \
-    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/audio_policy.conf:/system/etc/audio_policy.conf \
-    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/mixer_paths.xml:/system/etc/mixer_paths.xml \
     $(BOWSER_COMMON_FOLDER)/prebuilt/etc/smc_normal_world_android_cfg.ini:/system/etc/smc_normal_world_android_cfg.ini \
-    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     $(BOWSER_COMMON_FOLDER)/prebuilt/usr/idc/AtmelTouch.idc:system/usr/idc/AtmelTouch.idc \
     $(BOWSER_COMMON_FOLDER)/prebuilt/usr/idc/cyttsp4-i2c.idc:system/usr/idc/cyttsp4-i2c.idc \
-    $(BOWSER_COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl\
-    $(BOWSER_COMMON_FOLDER)/prebuilt/vendor/etc/audio_effects.conf:/system/vendor/etc/audio_effects.conf
+    $(BOWSER_COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 
-# Prebuilts /system/etc/bluetooth
+# Sensors
+PRODUCT_PACKAGES += \
+    sensors.omap4 \
+    libinvensense_hal \
+    libmllite \
+    libmplmpu
+
+# Wifi
 PRODUCT_COPY_FILES += \
-    $(BOWSER_COMMON_FOLDER)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+    $(BOWSER_COMMON_FOLDER)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
 $(call inherit-product-if-exists, vendor/amazon/bowser-common/bowser-common-vendor.mk)

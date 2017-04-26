@@ -1,3 +1,4 @@
+import init.amazon.omap4.rc
 
 on fs
     mkdir /efs 0775 radio radio
