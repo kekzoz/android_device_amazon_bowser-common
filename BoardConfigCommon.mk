@@ -15,9 +15,6 @@ TI_CAMERAHAL_MAX_CAMERAS_SUPPORTED := 1
 #TI_CAMERAHAL_DEBUG_FUNCTION_NAMES := true
 USE_CAMERA_STUB := false
 
-# Common files
--include vendor/amazon/bowser-common/BoardConfigVendor.mk
-
 # Dolby enhancements
 OMAP_ENHANCEMENT_DOLBY_DDPDEC51_MULTICHANNEL := true
 BOARD_AUDIO_HW_CONFIG_DIR := $(BOWSER_COMMON_FOLDER)
