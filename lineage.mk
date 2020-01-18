@@ -1,1 +1,1 @@
-DEVICE_PACKAGE_OVERLAYS += device/amazon/bowser-common/overlay/lineage
+DEVICE_PACKAGE_OVERLAYS += device/amazon/bowser-common/overlay/ev
